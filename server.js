@@ -88,6 +88,23 @@ app.post('/login', (req, res) => {
   });
 });
 
+
+app.get('/search', (req, res) => {
+  const { title, genre } = req.query;
+
+  const titleQuery = title ? `title LIKE '%${title}%'` : '';
+  const genreQuery = genre ? `AND gen LIKE '%${genre}%'` : '';
+
+  const query = `SELECT * FROM movies WHERE ${titleQuery} ${genreQuery};`;
+  db.query(query, (err, results) => {
+    if (err) {
+      res.json({ success: false, message: err });
+    }
+    console.log(query, results);
+    res.json({ results });
+  });
+})
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
