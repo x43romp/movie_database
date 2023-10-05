@@ -21,6 +21,13 @@ Copy `.env.sample` to `.env` with the code below, and place the username and pas
 cp .env.sample .env
 ```
 
+
+### Populate MySQL Database
+- Open `sql` folder
+- Open `.sql` file
+- Execute that query
+- Your thing should be populated now
+
 ## Run Application
 ``` sh
 npm start
