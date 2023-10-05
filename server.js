@@ -4,16 +4,24 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const app = express();
 const port = process.env.PORT || 3000;
+require('dotenv').config();
 
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'movie_database'
-});
+const connection = {
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT || 3306,
+  user: process.env.MYSQL_USER || 'root',
+  password: process.env.MYSQL_ROOT_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+}
+const db = mysql.createConnection(connection);
+
+console.log('host', process.env.MYSQL_HOST);
+console.log(connection);
+
 
 db.connect(err => {
   if (err) {
+    // console.log(db);
     console.error('Error connecting to the database:', err);
     return;
   }
@@ -55,7 +63,7 @@ app.post('/signup', (req, res) => {
           res.status(500).json({ success: false, message: 'Server error' });
           return;
         }
-        
+
         res.json({ success: true });
       });
     }
